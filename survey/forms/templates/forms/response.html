@@ -1,0 +1,40 @@
+{% extends 'forms/layout.html' %}
+
+{% block body %}
+<a href="{% url 'export_excel' request.user.username title %}" class="btn btn-secondary">Export as Excel</a>
+{% for responses in response_ls %}
+<ul>
+    <li><h7>{{ responses.0.question.question_text }}</h7></li>
+    <small class="text-muted">{{ responses.0.question.choices.choice_text }}</small>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Response</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for response in responses %}
+            <tr>
+                <td>{{ response.user.username }}</td>
+                <td>{{ response.user.email }}</td>
+                {% if response.question.question_type == "Short Answer" %}
+                    <td>{{ response.response_sa.answer }}</td>
+                {% elif response.question.question_type == "Long Answer" %}
+                    <td>{{ response.response_la.answer }}</td>
+                {% else %}
+                    <td>{{ response.response_mcq.answer }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</ul>
+{% endfor %}
+
+
+{% for question in questions_obj %}
+
+{% endfor %}
+{% endblock body %}

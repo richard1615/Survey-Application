@@ -1,0 +1,59 @@
+{% extends 'forms/layout.html' %}
+
+{% block body %}
+<form id="question-form" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="question">Question</label>
+      <input type="text" class="form-control" id="question" placeholder="Enter question here" name="question_text" required>
+    </div>
+    <div class="form-group">
+      <label for="qtype">Question Type</label>
+      <select class="form-control" id="qtype" name="question_type">
+        <option>Short Answer</option>
+        <option>Long Answer</option>
+        <option>Multiple Choice</option>
+        <option>File</option>
+      </select>
+    </div>
+    <div class="form-group" id="choice-block" style="display: none">
+        <label for="choices">Choices</label>
+        <input type="text" class="form-control" id="choices" name="question_choices" placeholder="Enter choices here (separated by commas)">  
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="is_required" name="is_required">
+        <label class="form-check-label" for="is_required">
+          Is this question Compulsory?
+        </label>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Update Form</button>
+    </div>
+  </form>
+
+  <script>
+    document.querySelector('#qtype').addEventListener('change', function(e) {
+      var value = e.target.value;
+      if (value === 'Multiple Choice') {
+        document.querySelector('#choice-block').style.display = 'block';
+        document.getElementById('choices').required = true;
+      } else {
+        document.querySelector('#choice-block').style.display = 'none';
+      }
+    });
+
+    {% if question_obj %}
+    document.getElementById('question').value = '{{ question_obj.question_text }}';
+    document.getElementById('qtype').value = '{{ question_obj.question_type }}';
+    {% if question_obj.is_required %}
+    document.getElementById('is_required').checked = true;
+    {% endif %}
+    var value = '{{ question_obj.question_type }}';
+    if (value === 'Multiple Choice') {
+      document.querySelector('#choice-block').style.display = 'block';
+      document.getElementById('choices').value = '{{ question_obj.choices.choice_text }}';
+      document.getElementById('choices').required = true;
+    }
+    {% endif %}
+  </script>
+{% endblock body %}

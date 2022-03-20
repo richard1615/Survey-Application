@@ -1,0 +1,61 @@
+{% extends 'forms/layout.html' %}
+
+{% block body %}
+<div class="container">
+    <h2>{{ form_obj.title }}</h2>
+    <span>{{ form_obj.description }}</span>
+    <br>
+    <a href="{% url 'edit_form' form_obj.created_by.username form_obj.title %}">Edit Form details</a>
+    <a href="{% url 'delete_form' form_obj.title%}">Delete This Form</a>
+</div>
+
+<div class="container">
+  <h4>Questions</h4>
+</div>
+
+{% for question in questions_obj %}
+  <div class="list-group">
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">{{question.question_text}}</h6>
+        <small>{{ question.question_type }}</small>
+      </div>
+      {% if question.question_type == "Multiple Choice" %}
+        <small class="text-muted">Options: {{question.choices.choice_text}}</small>
+      {% endif %}
+      <small class="text-muted"><a href="{% url 'edit_question' form_obj.created_by.username form_obj.title question.id %}">Edit this question</a></small>
+      <small class="text-muted"><a href="{% url 'delete_question' form_obj.title question.id %}">Delete this question</a></small>
+    </div>
+  </div>  
+{% endfor %}
+
+<div class="container">
+  <a href="{% url 'view_response' form_obj.created_by.username form_obj.title %}">View Responses</a>
+  <br>
+  <a href="{% url 'add_question' form_obj.title %}">Add Question</a>
+</div>
+
+<div class="container">
+  <label for="form-url">Share this form: </label>
+  <input type="text" value="{{ form_url }}" id="form-url" name="form-url" disabled>
+  <button onclick="myFunction()" class="btn btn-outline-primary">Copy text</button>
+</div>
+
+<script>
+  function myFunction() {
+    /* Get the text field */
+    var copyText = document.getElementById("form-url");
+  
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+  
+     /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+  
+    /* Alert the copied text */
+    alert("Copied the form URL to your clipboard");
+  } 
+</script>
+
+{% endblock body %}

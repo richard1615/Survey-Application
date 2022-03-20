@@ -1,0 +1,57 @@
+{% extends 'forms/layout.html' %}
+{% load static %}
+
+{% block body %}
+{% load filter_tags %}
+<form id = "form_response" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <ol>
+    {% for question in questions_obj %}
+        <li>
+            {% if question.question_type == "Multiple Choice" %}
+                <div class="form-group">
+                    <label for="question-{{ question.id }}">{{ question.question_text }}</label>
+                    <select class="form-control" data-id="question-{{ question.id }}" name="question-{{ question.id }}">
+                        <option value="">Choose...</option>
+                    {% with question.choices.choice_text|split:"," as choices %}
+                        {% for choice in choices %}
+                            <option value="{{ choice }}">{{ choice }}</option>
+                        {% endfor %}
+                    {% endwith %}
+                    </select>
+                </div>
+            {% elif question.question_type == "Short Answer" %}
+                <div class="form-group">
+                    <label for="question-{{ question.id }}">{{ question.question_text }}</label>
+                    <input type="text" class="form-control" data-id="question-{{ question.id }}" placeholder="Answer" name="question-{{ question.id }}">
+                </div>
+            {% elif question.question_type == "Long Answer" %}
+                <div class="form-group">
+                    <label for="question-{{ question.id }}">{{ question.question_text }}</label>
+                    <textarea class="form-control" data-id="question-{{ question.id }}" rows="3" name="question-{{ question.id }}"></textarea>
+                </div>   
+            {% else %}
+                <div class="form-group">
+                    <label for="question-{{ question.id }}">{{ question.question_text }}</label>
+                    <div class="mb-3">
+                        <label for="question-{{ question.id }}" class="form-label">Upload file</label>
+                        <input class="form-control" type="file" data-id="question-{{ question.id }}" name="question-{{ question.id }}">
+                    </div>
+            {% endif %}
+        </li>        
+    {% endfor %}
+    </ol>
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
+
+<script>
+    {% for question in questions_obj %}
+    {% if question.is_required %}
+    document.querySelector('[data-id="question-{{ question.id }}"]').setAttribute('required', 'required');
+    {% endif %}
+    {% endfor %}
+</script>
+
+<script src="{% static 'forms/form_response.js' %}"></script>
+
+{% endblock body %}

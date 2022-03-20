@@ -1,0 +1,12 @@
+{% extends 'forms/layout.html' %}
+
+{% block body %}
+<p>{{message}}</p>
+<a href="{% url 'index' %}">Home</a>
+{% if can_delete %}
+<a href="{% url 'delete_response' username title %}">Delete your response</a>
+{% endif %}
+{% if can_edit %}
+<a href="#">Edit your response</a>
+{% endif %}
+{% endblock body %}
