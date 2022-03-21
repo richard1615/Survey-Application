@@ -50,18 +50,32 @@
 ## References Used
 
 https://www.youtube.com/watch?v=ekyCxgtW3Js
+
 https://moonbooks.org/Articles/How-to-create-a-list-of-items-from-a-string-in-a-Django-template-/#comment
+
 https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
+
 https://stackoverflow.com/questions/6223149/django-post-checkbox-data
+
 https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it-with-a-single-queryset-in-django
+
 https://getbootstrap.com/docs/5.0/forms/validation/#browser-defaults
+
 https://stackoverflow.com/questions/1131232/form-validation-in-django
+
 https://getbootstrap.com/docs/4.1/content/tables/#striped-rows
+
 https://stackoverflow.com/questions/4651172/reference-list-item-by-index-within-django-template
+
 https://www.telerik.com/blogs/save-for-later-feature-in-forms-using-localstorage
+
 https://github.com/pinax/django-mailer
+
 https://stackoverflow.com/questions/57924398/how-to-export-excel-file-in-django
+
 https://stackoverflow.com/questions/7188145/call-a-javascript-function-every-5-seconds-continuously
+
 https://www.youtube.com/watch?v=mF5jzSXb1dc&t=182s
+
 https://www.youtube.com/watch?v=rmVHOg7fj7E
 
